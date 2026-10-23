@@ -1,0 +1,38 @@
+# Copy this file to terraform.tfvars and fill in your values:
+#   cp terraform.tfvars.example terraform.tfvars
+#
+# Rules (README section 7):
+#   * Do not store AWS credentials in this file (none are needed).
+#   * Private keys are never referenced here - only the key pair NAME.
+
+# ------------------------------------------------------------------
+# Required: you must uncomment and set these two values.
+# ------------------------------------------------------------------
+
+# Your public IPv4 address as seen from the internet.
+# Find it with: curl -s https://checkip.amazonaws.com
+# It must be a host-specific /32; SSH to the bastion is open to this
+# address only. If your IP changes, update this value and re-apply.
+# admin_cidr = "203.0.113.10/32"
+
+# Your name, used in resource tags and in the report.
+# student_name = "Jan Reddy"
+
+# ------------------------------------------------------------------
+# Optional overrides (defaults shown).
+# ------------------------------------------------------------------
+
+aws_region       = "ap-south-1"
+project_name     = "EWB-VPC-Peering"
+environment      = "Lab"
+instance_type    = "t3.micro"
+deployment_mode  = "staged"   # staged: no peering/peer routes (baseline test)
+                              # complete: peering + routes (positive tests)
+key_pair_name    = "ewb-lab"
+create_key_pair  = false      # true -> also pass public_key below
+
+# Set create_key_pair = true and paste your PUBLIC key material to have
+# Terraform create the key pair (the private key never leaves your machine):
+#   ssh-keygen -t ed25519 -f ~/.ssh/ewb-lab.pem -C "ewb-lab"
+#   public_key = "ssh-ed25519 AAAA... ewb-lab"
+# public_key = ""

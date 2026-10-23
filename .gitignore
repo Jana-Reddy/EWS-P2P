@@ -1,0 +1,40 @@
+# ------------------------------------------------------------------
+# Terraform
+# ------------------------------------------------------------------
+.terraform/
+.terraform.tfstate.lock.info
+
+# State files are sensitive infrastructure metadata - never commit them.
+*.tfstate
+*.tfstate.*
+
+# Crash logs and generated plan files may contain sensitive data.
+crash.log
+crash.*.log
+*.tfplan
+plan.out
+
+# Real variable files stay local; only the example file is committed.
+*.tfvars
+!terraform.tfvars.example
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# ------------------------------------------------------------------
+# Private keys and secrets must never be committed.
+# ------------------------------------------------------------------
+*.pem
+*.key
+*_rsa
+*_ed25519
+
+# ------------------------------------------------------------------
+# Editor / OS noise
+# ------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+*.swp
