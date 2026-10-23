@@ -13,11 +13,11 @@
 
 resource "aws_security_group" "bastion" {
   name        = "ewb-sg-bastion"
-  description = "EWB lab bastion: SSH only from the administrator's public /32."
+  description = "EWB lab bastion: SSH only from the administrator public /32."
   vpc_id      = aws_vpc.a.id
 
   ingress {
-    description = "SSH from administrator's current public IPv4 (update var.admin_cidr if it changes)"
+    description = "SSH from administrator current public IPv4 (update var.admin_cidr if it changes)"
     protocol    = "tcp"
     from_port   = 22
     to_port     = 22
@@ -41,7 +41,7 @@ resource "aws_security_group" "app_a" {
   vpc_id      = aws_vpc.a.id
 
   ingress {
-    description = "SSH from the bastion's private IP (ProxyJump source)"
+    description = "SSH from the bastion private IP (ProxyJump source)"
     protocol    = "tcp"
     from_port   = 22
     to_port     = 22
@@ -73,7 +73,7 @@ resource "aws_security_group" "app_b" {
   vpc_id      = aws_vpc.b.id
 
   ingress {
-    description = "SSH from the bastion's private IP (ProxyJump source)"
+    description = "SSH from the bastion private IP (ProxyJump source)"
     protocol    = "tcp"
     from_port   = 22
     to_port     = 22
