@@ -29,12 +29,12 @@ resource "aws_instance" "bastion" {
 }
 
 resource "aws_instance" "app_a" {
-  ami                 = local.ami_id
-  instance_type       = var.instance_type
-  subnet_id           = aws_subnet.a_private.id
-  private_ip          = var.app_a_private_ip
-  key_name            = local.key_name
-  monitoring          = false
+  ami           = local.ami_id
+  instance_type = var.instance_type
+  subnet_id     = aws_subnet.a_private.id
+  private_ip    = var.app_a_private_ip
+  key_name      = local.key_name
+  monitoring    = false
 
   # Note: associate_public_ip_address is NOT set - App-A must stay private.
   vpc_security_group_ids = [aws_security_group.app_a.id]
@@ -49,12 +49,12 @@ resource "aws_instance" "app_a" {
 }
 
 resource "aws_instance" "app_b" {
-  ami                 = local.ami_id
-  instance_type       = var.instance_type
-  subnet_id           = aws_subnet.b_private.id
-  private_ip          = var.app_b_private_ip
-  key_name            = local.key_name
-  monitoring          = false
+  ami           = local.ami_id
+  instance_type = var.instance_type
+  subnet_id     = aws_subnet.b_private.id
+  private_ip    = var.app_b_private_ip
+  key_name      = local.key_name
+  monitoring    = false
 
   # Note: associate_public_ip_address is NOT set - App-B must stay private.
   vpc_security_group_ids = [aws_security_group.app_b.id]

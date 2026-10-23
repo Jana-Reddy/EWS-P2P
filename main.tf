@@ -37,8 +37,8 @@ data "aws_ami" "al2023" {
 # ------------------------------------------------------------------
 
 data "aws_key_pair" "lab" {
-  count         = var.create_key_pair ? 0 : 1
-  key_pair_name = var.key_pair_name
+  count    = var.create_key_pair ? 0 : 1
+  key_name = var.key_pair_name
 }
 
 resource "aws_key_pair" "lab" {
@@ -52,10 +52,10 @@ resource "aws_key_pair" "lab" {
 # Plan-time sanity checks (README sections 11 and 15).
 
 check "key_pair_setup" {
-  assert(
-    var.create_key_pair ? var.public_key != "" : true,
-    "public_key is required when create_key_pair = true. Generate a local key pair first (ssh-keygen -f ~/.ssh/${var.key_pair_name}.pem) and pass its public material only."
-  )
+  assert {
+    condition     = var.create_key_pair ? var.public_key != "" : true
+    error_message = "public_key is required when create_key_pair = true. Generate a local key pair first (ssh-keygen -f ~/.ssh/${var.key_pair_name}.pem) and pass its public material only."
+  }
 }
 
 # ------------------------------------------------------------------
