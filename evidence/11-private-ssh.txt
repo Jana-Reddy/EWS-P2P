@@ -1,0 +1,14 @@
+== Test 4: Private SSH through bastion to App-B ==
+Fri Oct 23 16:20:48 UTC 2026
+$ ssh ewb-app-b
+ip-10-20-1-10.ap-south-1.compute.internal
+10.20.1.10 
+---
+PING 10.10.2.10 (10.10.2.10) 56(84) bytes of data.
+64 bytes from 10.10.2.10: icmp_seq=1 ttl=127 time=0.207 ms
+64 bytes from 10.10.2.10: icmp_seq=2 ttl=127 time=0.246 ms
+
+--- 10.10.2.10 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1055ms
+rtt min/avg/max/mdev = 0.207/0.226/0.246/0.019 ms
+exit=0

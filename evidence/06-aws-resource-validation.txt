@@ -1,0 +1,59 @@
+== Full AWS resource validation (complete mode), Fri Oct 23 16:23:53 UTC 2026 ==
+Account 823787500024  Region ap-south-1
+======================================================
+ EWB VPC Peering lab - AWS resource validation
+ Mode: complete   Region: <unresolved>
+======================================================
+
+-- Environment --
+AWS CLI: aws-cli/2.38.5 Python/3.15.0 Darwin/25.5.0 source/arm64
+         Region taken from the CLI profile: ap-south-1
+Caller identity: 823787500024	arn:aws:iam::823787500024:user/ewb-lab-deployer
+  [PASS] AWS authentication works.
+
+-- VPCs --
+  [PASS] VPC A ewb-vpc-a found (10.10.0.0/16): vpc-02e83b0abfeb42a3d
+  [PASS] VPC B ewb-vpc-b found (10.20.0.0/16): vpc-0cfe2b884622979a9
+
+-- Subnets --
+  [PASS] Subnet ewb-a-public OK (10.10.1.0/24 in vpc-02e83b0abfeb42a3d): subnet-0b4fd2a54404b6a5e (public)
+  [PASS] Subnet ewb-a-private OK (10.10.2.0/24 in vpc-02e83b0abfeb42a3d): subnet-076ada56dccfe0eed (private)
+  [PASS] Subnet ewb-b-private OK (10.20.1.0/24 in vpc-0cfe2b884622979a9): subnet-055d1b708c1d21b54 (private)
+  [PASS] Internet Gateway attached to VPC A: igw-080d96f4031b7a9f7
+
+-- Route tables --
+  [PASS] Route table ewb-rt-a-public associated with subnet-0b4fd2a54404b6a5e: rtb-02a29c43484c7a255
+  [PASS] Route table ewb-rt-a-private associated with subnet-076ada56dccfe0eed: rtb-0782b708c28b84971
+  [PASS] Route table ewb-rt-b-private associated with subnet-055d1b708c1d21b54: rtb-0d7eefe2151a72923
+  [PASS] Public route table has 0.0.0.0/0 -> igw-080d96f4031b7a9f7
+  [PASS] Peer route 10.20.0.0/16 -> pcx-0ca91a83b1d7756ed on private route table A.
+  [PASS] Peer route 10.10.0.0/16 -> pcx-0ca91a83b1d7756ed on private route table B.
+  [PASS] Peer route 10.20.0.0/16 -> pcx-0ca91a83b1d7756ed on public route table (bastion subnet).
+
+-- Security groups --
+  [PASS] ewb-sg-bastion SSH source(s): 152.57.163.248/32 
+         Confirm this equals the administrator's current public IP /32.
+  [PASS] ewb-sg-app-a SSH source is the bastion private IP (10.10.1.10/32): sg-0d5c0ac638ddf596b
+  [PASS] ewb-sg-app-a ICMP echo source is 10.20.1.10/32 (type 8).
+  [PASS] ewb-sg-app-b SSH source is the bastion private IP (10.10.1.10/32): sg-0acb75de6c55cc276
+  [PASS] ewb-sg-app-b ICMP echo source is 10.10.2.10/32 (type 8).
+
+-- EC2 instances --
+  [PASS] Instance ewb-bastion private IP is 10.10.1.10: i-098135518193b3fa2
+  [PASS] Instance ewb-bastion public IPv4: 13.201.70.144.
+  [PASS] Instance ewb-bastion uses security group ewb-sg-bastion.
+  [PASS] Instance ewb-app-a private IP is 10.10.2.10: i-041789dcb0448367d
+  [PASS] Instance ewb-app-a public IPv4: none.
+  [PASS] Instance ewb-app-a uses security group ewb-sg-app-a.
+  [PASS] Instance ewb-app-b private IP is 10.20.1.10: i-0346ff5b4e26c0d98
+  [PASS] Instance ewb-app-b public IPv4: none.
+  [PASS] Instance ewb-app-b uses security group ewb-sg-app-b.
+
+-- VPC peering connection --
+  [PASS] Peering ewb-a-b-peer is Active: pcx-0ca91a83b1d7756ed
+
+======================================================
+ Summary: 26 passed, 0 warnings, 0 failed
+======================================================
+RESULT: OK (with 0 warning(s))
+exit=0

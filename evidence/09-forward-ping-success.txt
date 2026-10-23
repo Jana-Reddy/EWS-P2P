@@ -1,0 +1,20 @@
+== Test 2: Forward ping App-A -> App-B (post-peering) ==
+Fri Oct 23 16:20:13 UTC 2026
+Test: ping 10.20.1.10 from ewb-app-a (expectation: success)
+Underlying command: ssh ewb-app-a 'ping -c 4 "10.20.1.10"'
+
+----- actual remote output (exit code 0) -----
+PING 10.20.1.10 (10.20.1.10) 56(84) bytes of data.
+64 bytes from 10.20.1.10: icmp_seq=1 ttl=127 time=0.470 ms
+64 bytes from 10.20.1.10: icmp_seq=2 ttl=127 time=0.205 ms
+64 bytes from 10.20.1.10: icmp_seq=3 ttl=127 time=0.199 ms
+64 bytes from 10.20.1.10: icmp_seq=4 ttl=127 time=0.195 ms
+
+--- 10.20.1.10 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3144ms
+rtt min/avg/max/mdev = 0.195/0.267/0.470/0.117 ms
+----- end of actual remote output -----
+
+PASS: 4/4 replies from 10.20.1.10 via ewb-app-a.
+      Capture this output as post-peering evidence.
+script_exit=0

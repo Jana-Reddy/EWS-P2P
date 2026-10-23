@@ -1,0 +1,19 @@
+== Test 1: Baseline ping failure (pre-peering), App-A -> App-B ==
+Date: Fri Oct 23 16:02:34 UTC 2026
+Direction: ewb-app-a (10.10.2.10) -> ewb-app-b (10.20.1.10), no peering deployed
+
+$ ./scripts/verify-connectivity.sh a2b --expect fail
+Test: ping 10.20.1.10 from ewb-app-a (expectation: fail)
+Underlying command: ssh ewb-app-a 'ping -c 4 "10.20.1.10"'
+
+----- actual remote output (exit code 1) -----
+PING 10.20.1.10 (10.20.1.10) 56(84) bytes of data.
+
+--- 10.20.1.10 ping statistics ---
+4 packets transmitted, 0 received, 100% packet loss, time 3114ms
+----- end of actual remote output -----
+
+PASS (expected failure): no replies from 10.20.1.10 via ewb-app-a.
+      Prior to peering this is the required baseline result
+      (README section 13, Test 1). Capture it as baseline evidence.
+script_exit=0

@@ -73,11 +73,10 @@ resource "aws_internet_gateway" "a" {
 resource "aws_route_table" "a_public" {
   vpc_id = aws_vpc.a.id
 
-  # Destination 10.10.0.0/16 -> local is implicit in AWS.
-  route {
-    cidr_block = var.vpc_a_cidr
-    gateway_id = "local"
-  }
+  # NOTE: no inline `route` blocks are used on purpose. AWS injects the local
+  # route automatically, and all other routes are managed as separate
+  # aws_route resources. Mixing inline routes with aws_route resources would
+  # let table updates delete the separate routes (observed live in this lab).
 
   tags = { Name = "ewb-rt-a-public" }
 }
@@ -85,11 +84,7 @@ resource "aws_route_table" "a_public" {
 resource "aws_route_table" "a_private" {
   vpc_id = aws_vpc.a.id
 
-  # Destination 10.10.0.0/16 -> local is implicit in AWS.
-  route {
-    cidr_block = var.vpc_a_cidr
-    gateway_id = "local"
-  }
+  # Same rule as above: local route is implicit; peer route is an aws_route.
 
   tags = { Name = "ewb-rt-a-private" }
 }
@@ -97,11 +92,7 @@ resource "aws_route_table" "a_private" {
 resource "aws_route_table" "b_private" {
   vpc_id = aws_vpc.b.id
 
-  # Destination 10.20.0.0/16 -> local is implicit in AWS.
-  route {
-    cidr_block = var.vpc_b_cidr
-    gateway_id = "local"
-  }
+  # Same rule as above: local route is implicit; peer route is an aws_route.
 
   tags = { Name = "ewb-rt-b-private" }
 }

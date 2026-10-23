@@ -1,0 +1,17 @@
+== Test 6a: ping App-A -> App-B after removing ICMP rule on ewb-sg-app-b ==
+Removed: ingress ICMP type 8 code 0 from 10.10.2.10/32 (sgr-0c4f12df4ae789019)
+Fri Oct 23 16:22:30 UTC 2026
+Test: ping 10.20.1.10 from ewb-app-a (expectation: fail)
+Underlying command: ssh ewb-app-a 'ping -c 4 "10.20.1.10"'
+
+----- actual remote output (exit code 1) -----
+PING 10.20.1.10 (10.20.1.10) 56(84) bytes of data.
+
+--- 10.20.1.10 ping statistics ---
+4 packets transmitted, 0 received, 100% packet loss, time 3088ms
+----- end of actual remote output -----
+
+PASS (expected failure): no replies from 10.20.1.10 via ewb-app-a.
+      Prior to peering this is the required baseline result
+      (README section 13, Test 1). Capture it as baseline evidence.
+script_exit=0

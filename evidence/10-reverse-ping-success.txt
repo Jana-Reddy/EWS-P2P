@@ -1,0 +1,21 @@
+== Test 3: Reverse ping App-B -> App-A (post-peering) ==
+Fri Oct 23 16:20:35 UTC 2026
+Test: ping 10.10.2.10 from ewb-app-b (expectation: success)
+Underlying command: ssh ewb-app-b 'ping -c 4 "10.10.2.10"'
+
+----- actual remote output (exit code 0) -----
+Warning: Permanently added '10.20.1.10' (ED25519) to the list of known hosts.
+PING 10.10.2.10 (10.10.2.10) 56(84) bytes of data.
+64 bytes from 10.10.2.10: icmp_seq=1 ttl=127 time=0.202 ms
+64 bytes from 10.10.2.10: icmp_seq=2 ttl=127 time=0.223 ms
+64 bytes from 10.10.2.10: icmp_seq=3 ttl=127 time=0.205 ms
+64 bytes from 10.10.2.10: icmp_seq=4 ttl=127 time=0.229 ms
+
+--- 10.10.2.10 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3086ms
+rtt min/avg/max/mdev = 0.202/0.214/0.229/0.011 ms
+----- end of actual remote output -----
+
+PASS: 4/4 replies from 10.10.2.10 via ewb-app-b.
+      Capture this output as post-peering evidence.
+script_exit=0

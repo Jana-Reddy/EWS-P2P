@@ -241,7 +241,7 @@ if [[ -z "$SG_APP_A" || "$SG_APP_A" == "None" ]]; then fail "Security group ewb-
 if [[ -z "$SG_APP_B" || "$SG_APP_B" == "None" ]]; then fail "Security group ewb-sg-app-b not found."; fi
 
 if [[ -n "$SG_BASTION" && "$SG_BASTION" != "None" ]]; then
-  SOURCES=$(sg_attr ewb-sg-bastion "IpPermissions[?IpProtocol=='tcp' && ToPort=='22'].IpRanges[].CidrIp" | tr '\t' '\n')
+  SOURCES=$(sg_attr ewb-sg-bastion "IpPermissions[?IpProtocol=='tcp' && ToPort==\`22\`].IpRanges[].CidrIp" | tr '\t' '\n')
   echo "$SOURCES" | grep -q '0.0.0.0/0' && fail "ewb-sg-bastion allows SSH from 0.0.0.0/0 - forbidden by the lab rules."
   if [[ -n "$SOURCES" ]]; then
     pass "ewb-sg-bastion SSH source(s): $(echo $SOURCES | tr '\n' ' ')"
@@ -253,8 +253,8 @@ fi
 
 check_app_sg() { # $1=sg tag $2=sg id $3=icmp source cidr
   local ssh_src icmp_src
-  ssh_src=$(sg_attr "$1" "IpPermissions[?IpProtocol=='tcp' && ToPort=='22'].IpRanges[].CidrIp" | tr '\t' '\n' | head -1)
-  icmp_src=$(sg_attr "$1" "IpPermissions[?IpProtocol=='icmp' && FromPort=='8'].IpRanges[].CidrIp" | tr '\t' '\n' | head -1)
+  ssh_src=$(sg_attr "$1" "IpPermissions[?IpProtocol=='tcp' && ToPort==\`22\`].IpRanges[].CidrIp" | tr '\t' '\n' | head -1)
+  icmp_src=$(sg_attr "$1" "IpPermissions[?IpProtocol=='icmp' && FromPort==\`8\`].IpRanges[].CidrIp" | tr '\t' '\n' | head -1)
   if [[ "$ssh_src" == "$BASTION_CIDR" ]]; then
     pass "$1 SSH source is the bastion private IP ($ssh_src): $2"
   else
